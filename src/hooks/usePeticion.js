@@ -1,8 +1,11 @@
-export const usePeticion = ({
+export const usePeticion = async({
     url,
     metodo
 })=>{
-    return fetch(url,{
+    const datos = await fetch(url,{
         method:metodo
-    }).json()
+    })
+    const res = await datos.json()
+
+    return res
 }

@@ -5,43 +5,50 @@ import { useLocalStorage } from './hooks/useLocalStorage'
 
 function App() {
 
-  const  [prueba, setPrueba] = useState(0)
-  const  [count, setCount] = useState(0)
+  const [prueba, setPrueba] = useState(0)
+  const [count, setCount] = useState(0)
 
   async function handleClick() {
-    const nuevoCount = count +1
+    const nuevoCount = count + 1
     setCount(nuevoCount)
-    
+
     useLocalStorage({
-      opcion:"guardar",
-      valor:nuevoCount
+      opcion: "guardar",
+      valor: nuevoCount
     })
 
-    const datos =  await usePeticion({
-      url:"https://dragonball-api.com/api/characters",
+    usePeticion({
+      url: "https://dragonball-api.com/api/characters",
       metodo: "GET"
-    })
+    }).then(
+      resultado => {
+        console.log("resultado", resultado)
 
-    const test = datos.json()
+        useLocalStorage({
+          opcion: "guardar",
+          valor: resultado.items[0].name
+        })
+      }
+    )
 
-    const urls = test.json()
 
-    useLocalStorage({
-      opcion:"guardar",
-      valor: urls.items[0].name
-    })
 
     const valorRecuperado = useLocalStorage({
-      opcion:"recuperar"
+      opcion: "recuperar"
     })
 
     setPrueba(valorRecuperado)
-    return count +1
+    return count + 1
   }
 
   return (
     <>
+      <div className="card">
 
+        <button onClick={handleClick}>
+          count is {count}
+        </button>
+      </div>
     </>
   )
 }
