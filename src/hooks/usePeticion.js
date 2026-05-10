@@ -1,11 +1,18 @@
-export const usePeticion = async({
+import datosPlaceHolder from"./../cache/pagina1.json";
+
+export const usePeticion = async ({
     url,
     metodo
-})=>{
-    const datos = await fetch(url,{
-        method:metodo
-    })
-    const res = await datos.json()
+}) => {
+    try {
+        const datos = await fetch(url, {
+            method: metodo
+        })
+        const res = await datos.json()
 
-    return res
+        return res
+    } catch (error) {
+        console.log("Luego, veremos");
+        return datosPlaceHolder
+    }
 }

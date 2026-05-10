@@ -17,6 +17,10 @@ export const Animes = () => {
                 setListado(r.data)
                 setCantidadAnimes(r.data.length)
             }
+        ).catch(
+            rechazado => {
+                //console.log("error?", rechazado.message)
+            }
         )
     },
         [pagina, cantidadAnimes])
